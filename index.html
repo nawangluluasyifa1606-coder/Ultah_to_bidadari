@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hai My Love</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <style>
+        .slide-kiri {
+    animation: munculDariKiri 0.7s ease-out forwards !important;
+}
+
+@keyframes munculDariKiri {
+    from {
+        transform: translateX(-150%); /* Mulai jauh dari kiri luar layar */
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0); /* Berhenti di posisi tengah pas */
+        opacity: 1;
+    }
+}
+
+/* Tambahkan ini di body biar gak bisa di-scroll ke samping pas animasi jalan */
+body {
+    overflow-x: hidden;
+}
+.ios-popup {
+    border-radius: 20px !important;
+    background: #1c1c1e !important;
+    padding: 0 !important;
+    width: 320px !important;
+    overflow: hidden;
+}
+
+/* Ini yang bikin garisnya mentok horizontal */
+.swal2-actions {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: stretch !important;
+}
+
+.ios-button {
+    flex: 1 !important;
+    margin: 0 !important;
+    padding: 15px 0 !important;
+    background: transparent !important;
+    color: #0a84ff !important;
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    border: none !important;
+    /* GARIS TIPIS - JANGAN PAKAI 100px */
+    border-top: 0.5px solid #f8f8fd !important; 
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    cursor: pointer;
+}
+
+.ios-title {
+    color: white !important;
+    padding: 25px 20px 10px 20px !important;
+}
+
+.swal2-actions button + button {
+    border-left: 0.5px solid #f8f8fa !important;
+}
+
+/* Pastikan container tombolnya rapat (gak ada gap) */
+.swal2-actions {
+    gap: 0 !important;
+}
+.swal2-image {
+    mix-blend-mode: screen !important;
+    background: transparent !important;
+}
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body {
+            background: url('https://www.dropbox.com/scl/fi/zt407sshlbnz3sp4nomq9/1775870447078.png?rlkey=j2tgbsoctcykwybs56j5i6d2z&dl=1');
+            background-size: 100%; background-position: center;
+            background-attachment: fixed;
+            height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden;
+        }
+        .overlay {
+            background: rgba(0, 0, 0, 0.6); width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
+            opacity: 0; transition: 1s; pointer-events: none;
+        }
+        .overlay.show { opacity: 1; pointer-events: auto; }
+        .content-box { text-align: center; color: white; width: 90%; max-width: 400px; }
+        .clock { font-size: 4rem; font-weight: 80; }
+        .notif-card {
+            background: rgba(255, 255, 255, 0.95); color: #333; padding: 15px;
+            border-radius: 15px; text-align: left; margin: 30px 0; min-height: 100px;
+        }
+        .notif-header { display: flex; justify-content: space-between; font-size: 0.7rem; color: #888; margin-bottom: 5px; }
+        .notif-body strong { color: #ff4d6d; }
+        #teksAnimasi { font-size: 0.9rem; line-height: 1.4; min-height: 50px; }
+        .btn-main {
+            background: #f0f0f0; border: none; padding: 10px 20px; border-radius: 12px;
+            color: #333; font-weight: 600; cursor: pointer; display: none; margin: 10px auto 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .btn-mulai-layar {
+            background: white; color: black; padding: 12px 25px; border-radius: 12px;
+            font-weight: bold; cursor: pointer; border: none; font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay" id="tampilanUtama">
+        <div class="content-box">
+            <div class="clock" id="jam">00:00</div>
+            <div id="tanggalRealtime" style="margin-bottom: 20px; color: rgb(255, 255, 255); font-weight: 400;"></div>
+            
+            <div class="notif-card">
+                <div class="notif-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 8px;">
+                        <div style="display: flex; align-items: center; gap: 5px;">
+                       <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" style="width: 14px; height: 14px;">
+                    <span style="font-size: 0.7rem; color: #888; font-weight: 600; letter-spacing: 0.5px;">WHATSAPP</span>
+                </div>
+                <span style="font-size: 0.7rem; color: #888;">Now</span>
+            </div>
+    
+            <div class="notif-body">
+                <strong style="display: block; margin-bottom: 3px;">Ambassador of Nasi Uduk 🍚😋</strong>
+                <div id="teksAnimasi"></div>
+             </div>
+           </div>
+                
+            </div>
+
+            <button class="btn-main" id="btnNext" onclick="jalankanKetikan()">Pesan Selanjutnya</button>
+            <button class="btn-main" id="btnWA" onclick="kirimWA()">Kirim Pesan</button>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="https://www.dropbox.com/scl/fi/pwjlk94ite8h8gqour9s4/Selamat-ulang-tahun-Fahira.mp3?rlkey=4zs1fijezw0c9kg4s3hhwpzt9&dl=1" type="audio/mpeg">
+    </audio>
+    <audio id="notifSound">
+        <source src="https://www.dropbox.com/scl/fi/fbtkdstf32sgeun58gluf/nada_notifikasi_iphone_11_wa-www_tiengdong_com.mp3?rlkey=y19t8myazwzj74nyujh17qgo6&st=r5klu3f1&dl=1" type="audio/mpeg">
+    </audio>
+    <audio id="clickSound">
+       <source src="https://www.fesliyanstudios.com/play-mp3/6" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const stiker= "https://www.dropbox.com/scl/fi/08dgl0n2a4i1gxzshgo1q/Stiker-2-SFILE.MOBI.gif?rlkey=zbu0sw83p5zdswwpqr4q3y5vi&dl=1";
+        const Stiker1= "https://www.dropbox.com/scl/fi/us764cbxabkmgh4fnrfzf/Stiker-43-SFILE.MOBI.gif?rlkey=vp00ubxkgzatcfmrl16m081gx&st=gz67wpzv&dl=1"
+        const stiker2= "https://www.dropbox.com/scl/fi/q2g319hpwpsb61wilwuzk/Stiker-1-SFILE.MOBI-1.gif?rlkey=1yzkdl9ou9s04egcg733rookh&st=g8ydx7ng&dl=1"
+        const stiker3= "https://www.dropbox.com/scl/fi/e3czi9vcmou42cisftugi/Stiker-11-SFILE.MOBI.gif?rlkey=nnag3skhmchd7433ananr8ut9&st=60fg4j86&dl=1"
+        const stiker4= "https://www.dropbox.com/scl/fi/7f9cwr3ctpo246vj6xpfu/Stiker-42-SFILE.MOBI.gif?rlkey=n0j47d7ygh5qt4wyya4me9u0n&st=452c3wed&dl=1"
+        const stiker5= "https://www.dropbox.com/scl/fi/k3nl0kmxeijbtryku44v9/Stiker-29-SFILE.MOBI.gif?rlkey=tw2lqdy8bcuv8qdmabh3tr7pt&st=tsvxq4en&dl=1"
+        const stiker6= "https://www.dropbox.com/scl/fi/29wkdmzjtzz9wne7lq3p1/Stiker-40-SFILE.MOBI.gif?rlkey=x39mj7hv4r0xjoif4aehuggxq&st=6kgteq0n&dl=1"
+        const stiker7= "https://www.dropbox.com/scl/fi/h61dcftp95zavf3yx1gsf/Stiker-16-SFILE.MOBI.gif?rlkey=8eliilsvqq7dzzqn2x7hc1vxj&st=6kgykt0n&dl=1"
+        const music = document.getElementById('bgMusic');
+        let stepTeks = 0;
+
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('jam').innerText = String(now.getHours()).padStart(2, '0') + ":" + String(now.getMinutes()).padStart(2, '0');
+        }
+        setInterval(updateTime, 1000); updateTime
+
+// Daftar semua stiker yang mau di-preload
+const semuaStiker = [stiker, Stiker1, stiker2, stiker3, stiker4, stiker5, stiker6, stiker7];
+
+semuaStiker.forEach((src) => {
+    const img = new Image();
+    img.src = src;
+});
+
+function bunyikanKlik() {
+    const suara = document.getElementById('clickSound');
+    if (suara) {
+        suara.currentTime = 0;
+        suara.play().catch(e => console.log("Suara klik terblokir"));
+    }
+}
+
+       window.onload = async function() {
+        // Di awal window.onload
+if (music.paused) { 
+    music.play().catch(() => console.log("Musik butuh interaksi user"));
+}
+        // Cara otomatis: Setiap kali ada klik di layar, cek apakah itu tombol pop-up
+document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('swal2-confirm') || 
+        e.target.classList.contains('swal2-cancel') || 
+        e.target.classList.contains('swal2-deny') ||
+        e.target.classList.contains('ios-button')) {
+        bunyikanKlik();
+    }
+
+    function bunyikanKlik() {
+    const suara = document.getElementById('clickSound');
+    if (suara) {
+        suara.currentTime = 0;
+        
+        // --- ATUR VOLUME DI SINI ---
+        suara.volume = 0.1;
+        
+        suara.play().catch(e => console.log("Suara klik terblokir"));
+    }
+}
+});
+    // STEP 1
+    await Swal.fire({
+        title: '💕Hai Bidadari!❤️',
+        imageUrl: Stiker1, imageWidth: 140, imageHeight: 140, confirmButtonText: 'Hai😘',
+        buttonsStyling: false,
+        customClass: { popup: 'ios-popup', title: 'ios-title', confirmButton: 'ios-button', actions: 'swal2-actions' }
+    });
+    
+    if(typeof music !== 'undefined') { music.play().catch(() => console.log("Audio blocked")); }
+
+    // STEP 2 (Garis Pemisah Vertikal Ada)
+    const { value: ok2 } = await Swal.fire({
+        title: 'Are you feeling okay? 🧸🍬',
+        imageUrl: stiker2, imageWidth: 140, imageHeight: 140,
+        showCancelButton: true, confirmButtonText: 'Batter Now💕', cancelButtonText: 'Need a Hug😔',
+        buttonsStyling: false,
+        customClass: { 
+            popup: 'ios-popup', title: 'ios-title', 
+            confirmButton: 'ios-button', cancelButton: 'ios-button', // Keduanya dikasih class
+            actions: 'swal2-actions' 
+        }
+    });
+
+    if (ok2) {
+        await sayILoveYou();
+    } else {
+        // STEP 2B
+        await Swal.fire({ 
+            title: "Big hug for you! 🧸🤍 Feel better soon, my beauty..", 
+            imageUrl: stiker, imageWidth: 150, confirmButtonText: 'Warmest hug!🤗💕',
+            buttonsStyling: false,
+            customClass: { popup: 'ios-popup', title: 'ios-title', confirmButton: 'ios-button', actions: 'swal2-actions' }
+        });
+
+        // STEP 3 (Garis Pemisah Vertikal Ada)
+        const { value: ok3 } = await Swal.fire({
+            title: 'Are you feeling better now? 🥰❤️', imageUrl: stiker3, imageWidth: 140,
+            showCancelButton: true, confirmButtonText: 'Much better! 🥰', cancelButtonText: 'Dikit lagi.. 🤏',
+            buttonsStyling: false,
+            customClass: { 
+                popup: 'ios-popup', title: 'ios-title', 
+                confirmButton: 'ios-button', cancelButton: 'ios-button', 
+                actions: 'swal2-actions' 
+            }
+        });
+
+        if (ok3) {
+            await sayILoveYou();
+        } else {
+            await Swal.fire({ 
+                title: "Sending virtual hugs for you! 🧸💖", imageUrl: stiker, imageWidth: 150, confirmButtonText: 'Hehe, kenyang peluk! 😋',
+                buttonsStyling: false,
+                customClass: { popup: 'ios-popup', title: 'ios-title', confirmButton: 'ios-button', actions: 'swal2-actions' }
+            });
+            await sayILoveYou();
+        }
+    }
+
+    // STEP 4 (Garis Pemisah Vertikal Ada - Confirm vs Deny)
+    await Swal.fire({ 
+        title: 'Sebenernya ada yang mau aku bilang.. 👉👈🤭', imageUrl: stiker5, imageWidth: 140, confirmButtonText: 'Apa tuh? 🧐',
+        buttonsStyling: false,
+        customClass: { popup: 'ios-popup', title: 'ios-title', confirmButton: 'ios-button', actions: 'swal2-actions' }
+    });
+
+    await Swal.fire({
+        title: 'Kepo ya?😜', imageUrl: stiker6, imageWidth: 140,
+        showDenyButton: true, confirmButtonText: 'Bangettt! 😤🔥', denyButtonText: 'Sedikit... bohong deng 😋',
+        buttonsStyling: false,
+        customClass: { 
+            popup: 'ios-popup', title: 'ios-title', 
+            confirmButton: 'ios-button', denyButton: 'ios-button', // Deny button dikasih class juga
+            actions: 'swal2-actions' 
+        }
+    });
+
+    // STEP 5
+    await Swal.fire({ 
+        title: 'HAHA okayy, sabar yaa.. 😆', imageUrl: stiker7, imageWidth: 140, confirmButtonText: 'Cepetan kasih tau!😫',
+        buttonsStyling: false,
+        customClass: { popup: 'ios-popup', title: 'ios-title', confirmButton: 'ios-button', actions: 'swal2-actions' }
+    });
+
+    // TOMBOL AKHIR
+    Swal.fire({
+                title: '',
+                html: '<button class="btn-mulai-layar" onclick="mulaiHalamanUtama()">🎀Klik Aku🎀</button>',
+                showConfirmButton: false,
+                background: 'transparent',
+                backdrop: 'pink(0,0,0,0.8)', // PERBAIKAN: Pakai kutip di sini
+                allowOutsideClick: false
+    });
+};
+
+async function sayILoveYou() {
+    await Swal.fire({
+        title: 'I love you Fahira! ❤️',
+        imageUrl: stiker4, imageWidth: 140, imageHeight: 140,
+        confirmButtonText: 'I Love You Too',
+        buttonsStyling: false,
+        customClass: {
+            popup: 'ios-popup', title: 'ios-title',
+            confirmButton: 'ios-button', actions: 'swal2-actions'
+        }
+    });
+}
+
+
+        function mulaiHalamanUtama() {
+    Swal.close();
+    document.getElementById('tampilanUtama').classList.add('show');
+    jalankanKetikan(); // Animasi slide pertama kali bakal jalan dari sini
+}
+
+        function jalankanKetikan() {
+    const kartu = document.querySelector('.notif-card');
+    const suaraNotif = document.getElementById('notifSound'); // Ambil element audio notif
+    
+    document.getElementById('btnNext').style.display = "none";
+    document.getElementById('teksAnimasi').innerHTML = "";
+
+    // --- BAGIAN SUARA ---
+    if (suaraNotif) {
+        suaraNotif.currentTime = 0; // Biar kalau diklik cepet, suaranya ngulang dari awal
+        suaraNotif.play().catch(e => console.log("Suara diblokir browser, butuh klik dulu"));
+    }
+
+    // --- BAGIAN ANIMASI ---
+    kartu.classList.remove('slide-kiri');
+    void kartu.offsetWidth; 
+    kartu.classList.add('slide-kiri');
+
+    let arrayTeks = [
+        "Met ultah ya! Maaf banget ucapannya telat, kemarin sinyal dari bumi ke hati kamu lagi kena razia satpol PP. Intinya doa aku mah standar pabrik: sehat terus, makin pinter, dan jangan sampe lupa caranya nafas. ❤️",
+        "Cieee yang udah lulus SMA! Selamat ya udah lepas dari seragam putih abu-abu, bentar lagi jadi maba yang pusing mikirin krs. Padahal pengen Hukum tapi yang ada malah PBA, BKI, MPI, PAI, IES.. itu prodi apa menu prasmanan? Wkwk. Apapun pilihannya, semoga nggak nyasar ke prodi 'Teknik Melupakan Mantan' ya! 😂",
+        "Takutnya tahun depan aku udah jadi fosil atau lupa cara ngetik, jadi aku ucapin met ultah dari sekarang buat masa depan. Pokoknya kamu harus tetep keren apapun prodinya. Happy Birthday Fahira! You are my priority (setelah nasi uduk). ❤️"
+    ];
+
+    new Typed('#teksAnimasi', {
+        strings: [arrayTeks[stepTeks]],
+        typeSpeed: 50,
+        showCursor: false,
+        onComplete: () => {
+            stepTeks++;
+            if (stepTeks < arrayTeks.length) {
+                document.getElementById('btnNext').style.display = "block";
+            } else {
+                document.getElementById('btnWA').style.display = "block";
+            }
+        }
+    });
+}
+        function kirimWA() {
+            window.location.href = "https://wa.me/6285367099983?text=Makasih%20!%20Aku%20udah%20baca%20semuanya%20❤️";
+        }
+        function updateTanggal() {
+    const hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+    const bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+    
+    const d = new Date();
+    let namaHari = hari[d.getDay()];
+    let tanggal = d.getDate();
+    let namaBulan = bulan[d.getMonth()];
+    let tahun = d.getFullYear();
+    
+    // Tampilkan ke ID yang kita buat tadi
+    document.getElementById("tanggalRealtime").innerHTML = namaHari + ", " + tanggal + " " + namaBulan + " " + tahun;
+}
+
+// Panggil fungsinya supaya jalan
+updateTanggal();
+    </script>
+</body>
+</html>
