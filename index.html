@@ -86,7 +86,7 @@ button {
     outline: none;
     
     /* Bayangan tebal di bawah (Efek 3D) */
-    box-shadow: 0 5px 0 #d14d8d; 
+    box-shadow: 0 5px 0 #e9e3e6; 
 }
 
 button:active {
@@ -94,7 +94,7 @@ button:active {
     transform: translateY(4px); 
     
     /* Bayangan menipis seolah tombolnya nempel ke lantai */
-    box-shadow: 0 1px 0 #d14d8d; 
+    box-shadow: 0 1px 0 #faf7f8; 
 }
 
 /* CSS GLOBAL UNTUK SEMUA TOMBOL SWEETALERT */
@@ -107,6 +107,12 @@ button:active {
     box-shadow: 0 5px 0 #eeeaea !important; 
     border: 2px solid;
     border-radius: 1px !important; /* Biar membulat estetik */
+}
+
+/* EFEK PAS DIKLIK (MENDEM) */
+.swal2-confirm:active, .swal2-styled:active {
+    transform: translateY(2px) !important; 
+    box-shadow: 0 1px 0 #f1eff0 !important;
 }
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
