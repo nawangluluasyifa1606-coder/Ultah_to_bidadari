@@ -357,14 +357,57 @@ await Swal.fire({
 
     // TOMBOL AKHIR
     Swal.fire({
-        title: '',
-        html: '<button class="btn-mulai-layar" onclick="mulaiHalamanUtama()">🎀Klik Aku🎀</button>',
-        showConfirmButton: false,
-        background: 'transparent',
-        backdrop: 'rgba(0 0 0, 0)',
-        allowOutsideClick: false,
-        allowEscapeKey: false
-    });
+  title: '',
+  html: `
+    <style>
+      .btn-timbul-final {
+        background: #ff69b4; /* Warna Pink Bold sesuai tema Diary */
+        color: white;
+        border: none;
+        width: 80%; /* Biar lebar dan enak diklik */
+        padding: 15px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: 700;
+        font-family: 'Quicksand', sans-serif;
+        
+        /* EFEK TIMBUL (Sama kayak tombol Simpan Catatan lo) */
+        box-shadow: 0 5px 0 #d14d8d; 
+        
+        position: relative;
+        transition: all 0.1s;
+        outline: none;
+        display: inline-block;
+        margin: 20px auto;
+        
+        /* Animasi biar tetep gerak manggil */
+        animation: denyutSikit 1.5s infinite ease-in-out;
+      }
+
+      /* EFEK PAS DIKLIK (MENDEM KE BAWAH) */
+      .btn-timbul-final:active {
+        transform: translateY(4px); /* Turun ke bawah */
+        box-shadow: 0 1px 0 #d14d8d; /* Bayangan menipis seolah nempel lantai */
+      }
+
+      @keyframes denyutSikit {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.03); }
+        100% { transform: scale(1); }
+      }
+    </style>
+    
+    <button class="btn-timbul-final" onclick="mulaiHalamanUtama()">
+        🎀 Klik Aku 🎀
+    </button>
+  `,
+  showConfirmButton: false,
+  background: 'transparent',
+  backdrop: 'rgba(0, 0, 0, 0)',
+  allowOutsideClick: false,
+  allowEscapeKey: false
+});
 }; // <--- PASTIIN ADA INI BUAT TUTUP WINDOW.ONLOAD
 
 // FUNGSI SAYILOVEYOU DI LUAR WINDOW.ONLOAD
