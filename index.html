@@ -210,113 +210,140 @@ document.addEventListener('click', function (e) {
 }
 });
     // STEP 1
-    await Swal.fire({
-        title: '💕Hai Bidadari!❤️',
-        imageUrl: Stiker1, imageWidth: 140, imageHeight: 140, confirmButtonText: 'Hai😘',
-        buttonsStyling: false,
-        customClass: { popup: 'ios-popup', title: 'ios-title', confirmButton: 'ios-button', actions: 'swal2-actions' }
-    });
-    
-    if(typeof music !== 'undefined') { music.play().catch(() => console.log("Audio blocked")); }
+await Swal.fire({
+    title: '💕Hai Bidadari!❤️',
+    imageUrl: Stiker1, imageWidth: 140, imageHeight: 140, confirmButtonText: 'Hai😘',
+    allowOutsideClick: false, allowEscapeKey: false, // Kunci layar
+    buttonsStyling: false,
+    customClass: { popup: 'ios-popup', title: 'ios-title', confirmButton: 'ios-button', actions: 'swal2-actions' },
+    didOpen: () => { Swal.getConfirmButton().addEventListener('click', bunyikanKlik); }
+});
 
-    // STEP 2 (Garis Pemisah Vertikal Ada)
-    const { value: ok2 } = await Swal.fire({
-        title: 'Are you feeling okay? 🧸🍬',
-        imageUrl: stiker2, imageWidth: 140, imageHeight: 140,
-        showCancelButton: true, confirmButtonText: 'Batter Now💕', cancelButtonText: 'Need a Hug😔',
+if(typeof music !== 'undefined') { music.play().catch(() => console.log("Audio blocked")); }
+
+// STEP 2
+const { value: ok2 } = await Swal.fire({
+    title: 'Are you feeling okay? 🧸🍬',
+    imageUrl: stiker2, imageWidth: 140, imageHeight: 140,
+    showCancelButton: true, confirmButtonText: 'Better Now💕', cancelButtonText: 'Need a Hug😔',
+    allowOutsideClick: false, allowEscapeKey: false, // Kunci layar
+    buttonsStyling: false,
+    customClass: { 
+        popup: 'ios-popup', title: 'ios-title', 
+        confirmButton: 'ios-button', cancelButton: 'ios-button', 
+        actions: 'swal2-actions' 
+    },
+    didOpen: () => {
+        Swal.getConfirmButton().addEventListener('click', bunyikanKlik);
+        if(Swal.getCancelButton()) Swal.getCancelButton().addEventListener('click', bunyikanKlik);
+    }
+});
+
+if (ok2) {
+    await sayILoveYou();
+} else {
+    // STEP 2B
+    await Swal.fire({ 
+        title: "Big hug for you! 🧸🤍 Feel better soon, my beauty..", 
+        imageUrl: stiker, imageWidth: 150, confirmButtonText: 'Warmest hug!🤗💕',
+        allowOutsideClick: false, allowEscapeKey: false,
+        buttonsStyling: false,
+        customClass: { popup: 'ios-popup', title: 'ios-title', confirmButton: 'ios-button', actions: 'swal2-actions' },
+        didOpen: () => { Swal.getConfirmButton().addEventListener('click', bunyikanKlik); }
+    });
+
+    // STEP 3
+    const { value: ok3 } = await Swal.fire({
+        title: 'Are you feeling better now? 🥰❤️', imageUrl: stiker3, imageWidth: 140,
+        showCancelButton: true, confirmButtonText: 'Much better! 🥰', cancelButtonText: 'Dikit lagi.. 🤏',
+        allowOutsideClick: false, allowEscapeKey: false,
         buttonsStyling: false,
         customClass: { 
             popup: 'ios-popup', title: 'ios-title', 
-            confirmButton: 'ios-button', cancelButton: 'ios-button', // Keduanya dikasih class
+            confirmButton: 'ios-button', cancelButton: 'ios-button', 
             actions: 'swal2-actions' 
+        },
+        didOpen: () => {
+            Swal.getConfirmButton().addEventListener('click', bunyikanKlik);
+            if(Swal.getCancelButton()) Swal.getCancelButton().addEventListener('click', bunyikanKlik);
         }
     });
 
-    if (ok2) {
+    if (ok3) {
         await sayILoveYou();
     } else {
-        // STEP 2B
         await Swal.fire({ 
-            title: "Big hug for you! 🧸🤍 Feel better soon, my beauty..", 
-            imageUrl: stiker, imageWidth: 150, confirmButtonText: 'Warmest hug!🤗💕',
+            title: "Sending virtual hugs for you! 🧸💖", imageUrl: stiker, imageWidth: 150, confirmButtonText: 'Hehe, kenyang peluk! 😋',
+            allowOutsideClick: false, allowEscapeKey: false,
             buttonsStyling: false,
-            customClass: { popup: 'ios-popup', title: 'ios-title', confirmButton: 'ios-button', actions: 'swal2-actions' }
+            customClass: { popup: 'ios-popup', title: 'ios-title', confirmButton: 'ios-button', actions: 'swal2-actions' },
+            didOpen: () => { Swal.getConfirmButton().addEventListener('click', bunyikanKlik); }
         });
-
-        // STEP 3 (Garis Pemisah Vertikal Ada)
-        const { value: ok3 } = await Swal.fire({
-            title: 'Are you feeling better now? 🥰❤️', imageUrl: stiker3, imageWidth: 140,
-            showCancelButton: true, confirmButtonText: 'Much better! 🥰', cancelButtonText: 'Dikit lagi.. 🤏',
-            buttonsStyling: false,
-            customClass: { 
-                popup: 'ios-popup', title: 'ios-title', 
-                confirmButton: 'ios-button', cancelButton: 'ios-button', 
-                actions: 'swal2-actions' 
-            }
-        });
-
-        if (ok3) {
-            await sayILoveYou();
-        } else {
-            await Swal.fire({ 
-                title: "Sending virtual hugs for you! 🧸💖", imageUrl: stiker, imageWidth: 150, confirmButtonText: 'Hehe, kenyang peluk! 😋',
-                buttonsStyling: false,
-                customClass: { popup: 'ios-popup', title: 'ios-title', confirmButton: 'ios-button', actions: 'swal2-actions' }
-            });
-            await sayILoveYou();
-        }
+        await sayILoveYou();
     }
+}
 
-    // STEP 4 (Garis Pemisah Vertikal Ada - Confirm vs Deny)
-    await Swal.fire({ 
-        title: 'Sebenernya ada yang mau aku bilang.. 👉👈🤭', imageUrl: stiker5, imageWidth: 140, confirmButtonText: 'Apa tuh? 🧐',
-        buttonsStyling: false,
-        customClass: { popup: 'ios-popup', title: 'ios-title', confirmButton: 'ios-button', actions: 'swal2-actions' }
-    });
+// STEP 4
+await Swal.fire({ 
+    title: 'Sebenernya ada yang mau aku bilang.. 👉👈🤭', imageUrl: stiker5, imageWidth: 140, confirmButtonText: 'Apa tuh? 🧐',
+    allowOutsideClick: false, allowEscapeKey: false,
+    buttonsStyling: false,
+    customClass: { popup: 'ios-popup', title: 'ios-title', confirmButton: 'ios-button', actions: 'swal2-actions' },
+    didOpen: () => { Swal.getConfirmButton().addEventListener('click', bunyikanKlik); }
+});
 
-    await Swal.fire({
-        title: 'Kepo ya?😜', imageUrl: stiker6, imageWidth: 140,
-        showDenyButton: true, confirmButtonText: 'Bangettt! 😤🔥', denyButtonText: 'Sedikit... bohong deng 😋',
-        buttonsStyling: false,
-        customClass: { 
-            popup: 'ios-popup', title: 'ios-title', 
-            confirmButton: 'ios-button', denyButton: 'ios-button', // Deny button dikasih class juga
-            actions: 'swal2-actions' 
-        }
-    });
+await Swal.fire({
+    title: 'Kepo ya?😜', imageUrl: stiker6, imageWidth: 140,
+    showDenyButton: true, confirmButtonText: 'Bangettt! 😤🔥', denyButtonText: 'Sedikit... bohong deng 😋',
+    allowOutsideClick: false, allowEscapeKey: false,
+    buttonsStyling: false,
+    customClass: { 
+        popup: 'ios-popup', title: 'ios-title', 
+        confirmButton: 'ios-button', denyButton: 'ios-button', 
+        actions: 'swal2-actions' 
+    },
+    didOpen: () => {
+        Swal.getConfirmButton().addEventListener('click', bunyikanKlik);
+        if(Swal.getDenyButton()) Swal.getDenyButton().addEventListener('click', bunyikanKlik);
+    }
+});
 
-    // STEP 5
+// STEP 5 (Pastikan ada tanda titik koma dan kurung yang pas)
     await Swal.fire({ 
         title: 'HAHA okayy, sabar yaa.. 😆', imageUrl: stiker7, imageWidth: 140, confirmButtonText: 'Cepetan kasih tau!😫',
+        allowOutsideClick: false, allowEscapeKey: false,
         buttonsStyling: false,
-        customClass: { popup: 'ios-popup', title: 'ios-title', confirmButton: 'ios-button', actions: 'swal2-actions' }
+        customClass: { popup: 'ios-popup', title: 'ios-title', confirmButton: 'ios-button', actions: 'swal2-actions' },
+        didOpen: () => { Swal.getConfirmButton().addEventListener('click', bunyikanKlik); }
     });
 
     // TOMBOL AKHIR
     Swal.fire({
-                title: '',
-                html: '<button class="btn-mulai-layar" onclick="mulaiHalamanUtama()">🎀Klik Aku🎀</button>',
-                showConfirmButton: false,
-                background: 'transparent',
-                backdrop: 'pink(0,0,0,0.8)', // PERBAIKAN: Pakai kutip di sini
-                allowOutsideClick: false
+        title: '',
+        html: '<button class="btn-mulai-layar" onclick="mulaiHalamanUtama()">🎀Klik Aku🎀</button>',
+        showConfirmButton: false,
+        background: 'transparent',
+        backdrop: 'rgba(0 0 0, 0)',
+        allowOutsideClick: false,
+        allowEscapeKey: false
     });
-};
+}; // <--- PASTIIN ADA INI BUAT TUTUP WINDOW.ONLOAD
 
+// FUNGSI SAYILOVEYOU DI LUAR WINDOW.ONLOAD
 async function sayILoveYou() {
     await Swal.fire({
         title: 'I love you Fahira! ❤️',
         imageUrl: stiker4, imageWidth: 140, imageHeight: 140,
         confirmButtonText: 'I Love You Too',
+        allowOutsideClick: false, allowEscapeKey: false,
         buttonsStyling: false,
         customClass: {
             popup: 'ios-popup', title: 'ios-title',
             confirmButton: 'ios-button', actions: 'swal2-actions'
-        }
+        },
+        didOpen: () => { Swal.getConfirmButton().addEventListener('click', bunyikanKlik); }
     });
 }
-
-
         function mulaiHalamanUtama() {
     Swal.close();
     document.getElementById('tampilanUtama').classList.add('show');
