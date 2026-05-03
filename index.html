@@ -77,6 +77,44 @@ body {
     mix-blend-mode: screen !important;
     background: transparent !important;
 }
+        /* MASUKKAN INI DI DALAM <style> */
+
+button {
+    /* ... (kode lama kamu) ... */
+    position: relative;
+    transition: all 0.1s ease; /* Biar gerakannya cepet & responsif */
+    outline: none;
+    
+    /* Bayangan tebal di bawah (Efek 3D) */
+    box-shadow: 0 5px 0 #d14d8d; 
+}
+
+button:active {
+    /* Efek Mendem/Mekanik saat ditekan */
+    transform: translateY(4px); 
+    
+    /* Bayangan menipis seolah tombolnya nempel ke lantai */
+    box-shadow: 0 1px 0 #d14d8d; 
+}
+
+/* CSS GLOBAL UNTUK SEMUA TOMBOL SWEETALERT */
+.swal2-confirm, .swal2-styled {
+    position: relative !important;
+    transition: all 0.1s ease !important;
+    outline: none !important;
+    
+    /* Efek tebel bawah (Warna disesuaiin sama pink kado lo) */
+    box-shadow: 0 5px 0 #d14d8d !important; 
+    border: none !important;
+    border-radius: 20px !important; /* Biar membulat estetik */
+}
+
+/* EFEK PAS DIKLIK (MENDEM) */
+.swal2-confirm:active, .swal2-styled:active {
+    transform: translateY(4px) !important; 
+    box-shadow: 0 1px 0 #d14d8d !important;
+}
+        
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body {
             background: url('https://www.dropbox.com/scl/fi/zt407sshlbnz3sp4nomq9/1775870447078.png?rlkey=j2tgbsoctcykwybs56j5i6d2z&dl=1');
